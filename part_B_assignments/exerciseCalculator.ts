@@ -1,3 +1,8 @@
+interface exerciseValues {
+    target: number;
+    hours: Array<number>;
+}
+
 interface ExerciseResults {
     periodLength: number;
     trainingDays: number;
@@ -6,6 +11,26 @@ interface ExerciseResults {
     ratingDescription: string;
     target: number;
     average: number;
+}
+
+const parseExerciseArguments = (args: Array<String>): exerciseValues => {
+    if (args.length < 4) throw new Error("Not enough arguments");
+    let target;
+    if ( isNaN(Number(args[2])) ) {
+        throw new Error("Target argument has to be given as a number");
+    } else {
+        target = Number(args[2]);
+    }
+    const givenHours = args.slice(3);
+    if ( givenHours.filter(hour => isNaN(Number(hour))).length > 0) {
+        throw new Error("Exercise hours has to be given as numbers")
+    }
+    
+    return {
+        target: target,
+        hours: givenHours.map((hour) => Number(hour))
+    };
+
 }
 
 const calculateExercises = (doneExercises: Array<number>, target: number): ExerciseResults => {
@@ -45,4 +70,10 @@ const calculateExercises = (doneExercises: Array<number>, target: number): Exerc
 
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+    const { target, hours } = parseExerciseArguments(process.argv);
+    console.log(calculateExercises(hours, target));
+} catch (e) {
+    console.log("Whoopsie! An error occured, message: ", e.message);
+    console.log("Please give as arguments first the target hours followed by done daily exercise hours")
+}
