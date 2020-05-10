@@ -33,7 +33,7 @@ const parseExerciseArguments = (args: Array<string>): ExerciseValues => {
 
 };
 
-const calculateExercises = (doneExercises: Array<number>, target: number): ExerciseResults => {
+export const calculateExercises = (doneExercises: Array<number>, target: number): ExerciseResults => {
 
     const periodLength = doneExercises.length;
     const trainingDays = doneExercises.filter(amount => amount > 0).length;
