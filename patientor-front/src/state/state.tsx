@@ -3,6 +3,20 @@ import { Patient } from "../types";
 
 import { Action } from "./reducer";
 
+export const setPatientList = (data : Patient[]): Action => {
+  return {
+    type: "SET_PATIENT_LIST",
+    payload: data
+  }
+};
+
+export const addPatient = (data : Patient): Action => {
+  return {
+    type: "ADD_PATIENT",
+    payload: data
+  }
+};
+
 export type State = {
   patients: { [id: string]: Patient };
 };
